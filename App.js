@@ -1,3 +1,5 @@
+
+
 import { serve } from "https://deno.land/std@0.199.0/http/server.ts";
 
 // Serve static files
@@ -23,25 +25,26 @@ async function handler(req) {
         return await serveStaticFile(filePath, contentType);
     }
 
-    // Route: Index page
-    if (url.pathname === "/" && req.method === "GET") {
-        const response = await serveStaticFile('./views/index.html', 'text/html');
-        response.headers.set("Content-Security-Policy", "default-src 'self'; script-src 'self' https://cdn.jsdelivr.net; connect-src 'self' http://127.0.0.1:5000");
-        response.headers.set("X-Frame-Options", "DENY");
-        response.headers.set("X-Content-Type-Options", "nosniff");
-        return response;
-    }
 
-    // Route: Weather page
-    if (url.pathname === "/weather" && req.method === "GET") {
-        const response = await serveStaticFile('./views/weather.html', 'text/html');
-        response.headers.set("Content-Security-Policy", "default-src 'self'; script-src 'self' https://cdn.jsdelivr.net; connect-src 'self' http://127.0.0.1:5000");
-        response.headers.set("X-Frame-Options", "DENY");
-        response.headers.set("X-Content-Type-Options", "nosniff");
-        return response;
-    }
+// Route: Index page
+if (url.pathname === "/" && req.method === "GET") {
+    const response = await serveStaticFile('./views/index.html', 'text/html');
+    response.headers.set("Content-Security-Policy", "default-src 'self'; script-src 'self' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline'; img-src 'self'; connect-src 'self' http://127.0.0.1:5000 https://api.edenai.run");
+    response.headers.set("X-Frame-Options", "DENY");
+    response.headers.set("X-Content-Type-Options", "nosniff");
+    return response;
+}
 
-    return new Response("Not Found", { status: 404 });
+// Route: Weather page
+if (url.pathname === "/weather" && req.method === "GET") {
+    const response = await serveStaticFile('./views/weather.html', 'text/html');
+    response.headers.set("Content-Security-Policy", "default-src 'self'; script-src 'self' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline'; img-src 'self'; connect-src 'self' http://127.0.0.1:5000 https://api.edenai.run");
+    response.headers.set("X-Frame-Options", "DENY");
+    response.headers.set("X-Content-Type-Options", "nosniff");
+    return response;
+}
+
+return new Response("Not Found", { status: 404 });
 }
 
 // Utility: Get content type for static files

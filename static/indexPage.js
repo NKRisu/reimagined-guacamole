@@ -1,3 +1,4 @@
+
 document.addEventListener('DOMContentLoaded', () => {
     const fetchWeatherButton = document.getElementById('fetch-weather');
     const municipalityInput = document.getElementById('municipality');
