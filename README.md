@@ -1,4 +1,4 @@
-# reimagined-guacamole
+# Simple weather forecast app with AI-generated description of the municipality chosen
 
 ## Actual readme-file on what the heck is this program
 
