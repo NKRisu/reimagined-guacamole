@@ -19,6 +19,7 @@ AI functionality can be changed in the weatherPages.js file, there is option to 
 
 <details>
 <summary>WeatherApp development chatter</summary>
+  
 ### WeatherApp development chatter
 
 So this is my weather app, created in a day. It takes user input for a city/municipality/town etc. Turns this information into coordinates, longitude, latitude with opencagedata.com and then uses that data to fetch weather information from the open-meteo's API.
