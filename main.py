@@ -36,7 +36,7 @@ def get_weather():
     municipality_name = request.args.get('municipality', 'Helsinki')
 
     # Replace this with a new key if needed (after 2500 uses per account...)
-    api_key = '33f31170dd9e494d8906b1a2555e75c9'
+    api_key = 'api_key_here_please_thank_you_i_beg_please'
 
     latitude, longitude = get_coordinates(municipality_name, api_key)
 
