@@ -1,0 +1,76 @@
+
+body { 
+    font-family: 'Quicksand', sans-serif;
+    background: linear-gradient(45deg, #6ba4ff, #c2e9fb);   /* gradient */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    overflow: hidden; /* Prevents content from overflowing the viewport */
+}
+
+.container {
+    background-color:  #c1d8fd;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 600px;
+    overflow-y: auto; /* Adds vertical scroll for overflow */
+    max-height: 90vh; /* Limits the container height */
+}
+
+button {
+    background: #5193ff;
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 10px 2px;
+    cursor: pointer;
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Soft shadow */
+    transition: transform 0.3s; /* Smooth transitions */
+}
+
+button:hover {
+    background: linear-gradient( #5193ff, #c2e9fb); /* Gradient on hover */
+    transform: scale(1.05); /* Slightly enlarge on hover */
+}
+
+button:active { 
+    transform: scale(0.95); /* Slightly shrink on click */ 
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Softer shadow on click */ 
+}
+
+h1 {
+    text-align: center;
+    color: #333;
+}
+
+h3 {
+    padding-top: 10%;
+    text-align: center;
+    color: #333;
+}
+
+h4 {
+    text-align: center;
+    color: #333;
+}
+canvas {
+    width: 100% !important;
+    height: auto !important;
+}
+
+/* Responsive design for smaller screens */
+@media (max-width: 600px) {
+    .container {
+        padding: 1rem;
+        max-width: 100%;
+    }
+}
