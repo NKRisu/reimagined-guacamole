@@ -1,4 +1,4 @@
-# Simple weather forecast app with AI-generated description of the municipality chosen
+# Simple weather forecast app
 
 ## Actual readme-file on what the heck is this program
 
@@ -7,7 +7,8 @@ If user wants to change the hourly functionality this can be changed in the pyth
 
 AI functionality can be changed in the weatherPages.js file, there is option to change token amount, word amount by explicitly telling AI that in query and option to change the AI provider. List of providers for Eden are here: https://www.edenai.co/providers 
 
-
+Get your API keys from opencage data and eden AI, put them in their marked spots in code then
+start the main.py in your python IDE, run the app.js in what ever IDE you use and open a browser at 127.0.0.1:8000 and the webpage is there. 
 
 
 
