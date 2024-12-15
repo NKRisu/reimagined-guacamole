@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Add event listener for button click
     fetchWeatherButton.addEventListener('click', fetchWeather);
 
-    // Add event listener for Enter key press
+    // Add event listener for Enter key press for ease of use
     municipalityInput.addEventListener('keypress', (event) => {
         if (event.key === 'Enter') {
             fetchWeather();
