@@ -1,4 +1,5 @@
 
+//Quite a messy main code for the webapp, using my university course works as template and taking code snippets here and there and making it work
 
 import { serve } from "https://deno.land/std@0.199.0/http/server.ts";
 
