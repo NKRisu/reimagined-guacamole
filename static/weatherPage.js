@@ -1,5 +1,6 @@
 
 // this moved to top of page as it had some bugs
+// return to home screen
 document.getElementById('back-button').addEventListener('click', () => {
     window.location.href = '/';
 });
@@ -11,11 +12,12 @@ document.addEventListener('DOMContentLoaded', async () => {
     const hourlyCanvas = document.getElementById('hourlyWeatherChart');
     const municipalityNameElement = document.getElementById('municipality-name');
     const municipalityInfoElement = document.getElementById('municipality-info');
-
+    
+    // capitalize user input, user input is directly used for title and header fields, looks nicer with big letter
     function capitalizeFirstLetter(string) {
         return string.charAt(0).toUpperCase() + string.slice(1);
     }
-
+    // the AI description function
     async function fetchMunicipalityInfo(municipality) {
         const response = await fetch('https://api.edenai.run/v2/text/generation', {
             method: 'POST',
@@ -24,11 +26,13 @@ document.addEventListener('DOMContentLoaded', async () => {
                 'Authorization': `Bearer USE_KEY_HERE_FOR_THIS_TO_WORK` // Replace with new EDEN AI key 
             },
             body: JSON.stringify({
-                providers: 'google', // Specify the provider to use, if changed, you must change the pathing below
+                // Specify the provider to use, if changed, you must change the pathing below!!!! recommended to not change unless you know what you are doing
+                providers: 'google',
                 text: `Tell me about the municipality of ${municipality}. Keep the message within 55 words`, 
-                // also to avoid weirdly chopped messages 
-                // you should explicitly tell about half of token amount as max word count
-                max_tokens: 100  // adjust the lenght of message here
+                // explicitly tell word limit to avoid weirdly chopped messages 
+                // word limit is about half of token amount
+                // adjust the lenght of message here, explicit limit so it WILL cut messages at the Nth character/word 
+                max_tokens: 100  
             })
         });
     
@@ -39,9 +43,10 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     
         const data = await response.json();
-        console.log('Eden AI response:', data); // Log the response to inspect its structure
+        console.log('Eden AI response:', data); // Log the response to inspect its structure, debugging tool
     
-        // pathing to the generated text 
+        // pathing to the generated text, do not touch these unless you know what you want to change
+        // not always simple query word swap
         if (data['google'] && data['google'].status === 'success') 
             { const cleanedText = data['google'].generated_text 
                 .replace(/\*\*/g, '') // Remove double asterisks 
@@ -50,22 +55,22 @@ document.addEventListener('DOMContentLoaded', async () => {
             } 
             else if (data['google'] && data['google'].status === 'fail') 
                 { console.error('Error in AI response:', data['google'].error.message); 
-                    return 'No information available at the moment. Please try again later.'; 
+                    return 'No information available at the moment. Please try again later.'; // debugging
                 } 
                 else
                 { console.error('Unexpected response structure:', data); 
-                    return 'No information available at the moment. Please try again later.';
+                    return 'Response structure unknown, check the structure in inspect element';    // debugging
                 }
     }
     
-
+    // graph creation
     if (dailyCanvas && hourlyCanvas) {
         const dailyCtx = dailyCanvas.getContext('2d');
         const hourlyCtx = hourlyCanvas.getContext('2d');
 
         async function fetchWeatherData(municipality) {
             try {
-                const response = await fetch(`http://127.0.0.1:5000/weather?municipality=${municipality}`);
+                const response = await fetch(`http://127.0.0.1:5000/weather?municipality=${municipality}`);    // fetching the weather
                 if (response.ok) {
                     const weatherData = await response.json();
                     displayDailyWeatherData(weatherData);
@@ -77,7 +82,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 weatherContainer.innerHTML = 'Error fetching weather data';
             }
         }
-
+        // daily data's chart, modify the labels and colours to fit what you want
         function displayDailyWeatherData(data) {
             const labels = data.daily.time.map(date => {
                 const d = new Date(date);
@@ -134,7 +139,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 },
             });
         }
-
+        // hourly weather charts
         function displayHourlyWeatherData(data) {
             const labels = data.hourly.time.map((time, index) => 
                 { 
@@ -181,14 +186,18 @@ document.addEventListener('DOMContentLoaded', async () => {
                 },
             });
         }
-
+        // bit awkward way to get the municipality user has input, but it works okay
         const urlParams = new URLSearchParams(window.location.search);
         const municipality = urlParams.get('municipality');
         const capitalizedMunicipality = capitalizeFirstLetter(municipality);
+        // set it to capitalized one
         municipalityNameElement.textContent = capitalizedMunicipality;
-
+        // fetch the weather data
+        // this being all the way down here results in no weather data being shown if anything above does not work properly or is stuck waiting
+        // kind of by design, kind of not- at least its clear indication somethings broken
         fetchWeatherData(municipality);
-
+        
+        // populate the AI-generated info 
         const info = await fetchMunicipalityInfo(municipality);
         municipalityInfoElement.textContent = info;
 
