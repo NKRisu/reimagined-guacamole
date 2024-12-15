@@ -5,18 +5,15 @@ import requests
 app = Flask(__name__)
 CORS(app)
 
-
+# using opencagedata to convert municipality name to coordinate
+# 2500 requests/day limit on free one, should be enough
 def get_coordinates(municipality_name, api_key):
-    # using opencagedata to convert municipality name to coordinate
-    # 2500 requests/day limit on free one, should be enough
     base_url = 'https://api.opencagedata.com/geocode/v1/json'
     params = {
         'q': municipality_name,
         'key': api_key
     }
-
     response = requests.get(base_url, params=params)
-
     if response.status_code == 200:
         data = response.json()
         if data['results']:
@@ -36,7 +33,7 @@ def get_weather():
     municipality_name = request.args.get('municipality', 'Helsinki')
 
     # Replace this with a new key if needed (after 2500 uses per account...)
-    api_key = 'api_key_here_please_thank_you_i_beg_please'
+    api_key = 'api_key_here_please_thank_you_i_beg_please'    # PUT YOUR KEY HERE
 
     latitude, longitude = get_coordinates(municipality_name, api_key)
 
